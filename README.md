@@ -4,7 +4,7 @@
 
 <div align="center">
 
-[![Version](https://img.shields.io/badge/version-1.1.7-blue?style=flat-square)](#)
+[![Version](https://img.shields.io/badge/version-1.1.8-blue?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](/LICENSE)
 [![Language](https://img.shields.io/badge/language-TypeScript-blue?style=flat-square)](#)
 [![VSCode](https://img.shields.io/badge/vscode-%5E1.85.0-0078d4?style=flat-square)](#)
