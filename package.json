@@ -2,7 +2,7 @@
   "name": "clawrafaelia-suggestions",
   "displayName": "CLAW - Sugestões Inline com IA Automática",
   "description": "Sugestões de código em tempo real. Auto-detecta e usa qualquer IA: Gemini, OpenAI, Claude, LocalAI, Ollama",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "icon": "icon.png",
   "publisher": "RafaelBatista",
   "author": {
@@ -108,7 +108,13 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "test:watch": "npm run test -- --watch",
+    "bundle": "webpack --config webpack.config.js",
     "package": "vsce package --no-update-package-json",
+    "build:all": "npm install && npm run compile && npm run bundle && npm run package",
+    "build:distrobox": "bash ./scripts/build-with-distrobox.sh",
+    "build:podman": "bash ./scripts/build-with-podman.sh",
+    "build:local": "bash ./scripts/build-locally.sh",
+    "build:auto": "bash ./scripts/build-vsix.sh",
     "publish": "vsce publish"
   },
   "devDependencies": {
@@ -118,6 +124,7 @@
     "@typescript-eslint/parser": "^6.15.0",
     "concurrently": "^8.2.2",
     "eslint": "^8.56.0",
+    "terser-webpack-plugin": "^5.3.9",
     "typescript": "^5.3.3",
     "vsce": "^2.15.0",
     "webpack": "^5.89.0",

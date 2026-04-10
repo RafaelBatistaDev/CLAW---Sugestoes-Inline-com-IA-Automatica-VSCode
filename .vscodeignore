@@ -1,0 +1,61 @@
+# TypeScript source (compilado em dist/)
+src/
+tsconfig.json
+webpack.config.js
+
+# Build artifacts e temporários
+out/
+coverage/
+.vscode-test/
+*.log
+*.d.ts
+*.d.ts.map
+*.js.map
+
+# Documentação (não incluir no VSIX)
+*.md
+README.md
+QUICKSTART.md
+VERSION_PLAN.md
+TESTING_CHECKLIST.md
+STATUS.md
+INDEX.md
+INDEX.md
+START_HERE.md
+README-DEV.md
+BUILD_GUIDE.md
+
+# Scripts de build (não necessários na distribuição)
+scripts/
+Makefile
+.env.example
+
+# IDE e editor
+.vscode/
+.idea/
+.vscode-test/
+*.swp
+*.swo
+*~
+
+# Testes
+*.test.ts
+*.spec.ts
+*.test.js
+*.spec.js
+.nyc_output/
+
+# CI/CD e git
+.github/
+.git/
+.gitignore
+.gitattributes
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp

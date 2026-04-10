@@ -1,13 +1,13 @@
 /**
  * CLAW - Extensão VS Code com Sugestões Inline
  * Integra agent.py com InlineCompletionItemProvider
- * 
+ *
  * Arquitetura:
  * 1. InlineCompletionProvider observa cursor (debounce 500ms)
  * 2. AgentManager chama agent.py via subprocess
  * 3. TokenCache economiza APIcalls com similaridade semântica
  * 4. CircuitBreaker + Fallback automático entre agentes
- * 
+ *
  * Fluxo UX:
  * - Usuário para de digitar
  * - Extension envia contexto para agent.py
@@ -77,17 +77,50 @@ export async function activate(context: vscode.ExtensionContext) {
         logger.info('✅ InlineCompletionProvider registrado');
 
         // ════════════════════════════════════════════════════════════════════════════════
+        // CRIAR STATUS BAR COM BOTÃO DE TOGGLE
+        // ════════════════════════════════════════════════════════════════════════════════
+
+        const statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+
+        const updateStatusBar = () => {
+            const enabled = vscode.workspace.getConfiguration('clawrafaelia').get('enabled', true);
+            if (enabled) {
+                statusBar.text = '$(sparkle) CLAW:Inline ON';
+                statusBar.color = '#4EC9B0'; // Teal quando ativo
+                statusBar.tooltip = 'CLAW:Inline está ativo (Ctrl+Alt+C para desativar | Clique para status)';
+            } else {
+                statusBar.text = '$(circle-slash) CLAW:Inline OFF';
+                statusBar.color = '#A8A8A8'; // Cinza quando inativo
+                statusBar.tooltip = 'CLAW:Inline está inativo (Ctrl+Alt+C para ativar)';
+            }
+        };
+
+        statusBar.command = 'clawrafaelia.toggleSuggestions';
+        updateStatusBar();
+        statusBar.show();
+        context.subscriptions.push(statusBar);
+
+        // Atualizar status bar quando configuração mudar
+        vscode.workspace.onDidChangeConfiguration(event => {
+            if (event.affectsConfiguration('clawrafaelia.enabled')) {
+                updateStatusBar();
+            }
+        });
+
+        // ════════════════════════════════════════════════════════════════════════════════
         // REGISTRAR COMANDOS
         // ════════════════════════════════════════════════════════════════════════════════
 
-        // Comando: Ativar/Desativar
+        // Comando: Ativar/Desativar com visual feedback
         context.subscriptions.push(
             vscode.commands.registerCommand('clawrafaelia.toggleSuggestions', async () => {
-                const currentState = vscode.workspace.getConfiguration('clawrafaelia').get('enabled');
-                await vscode.workspace.getConfiguration('clawrafaelia').update('enabled', !currentState);
-                const newState = !currentState ? '✅ Ativado' : '❌ Desativado';
-                vscode.window.showInformationMessage(`CLAW Sugestões: ${newState}`);
-                logger.info(`Toggle: ${newState}`);
+                const currentState = vscode.workspace.getConfiguration('clawrafaelia').get('enabled', true);
+                const newState = !currentState;
+                await vscode.workspace.getConfiguration('clawrafaelia').update('enabled', newState, true);
+
+                const message = newState ? '✨ CLAW Ativado!' : '🔴 CLAW Desativado';
+                vscode.window.showInformationMessage(message);
+                logger.info(`Toggle: ${newState ? 'ON' : 'OFF'}`);
             })
         );
 
@@ -128,14 +161,6 @@ CLAW Agent Status:
                 // Provider verifica getLogLevel() dinamicamente
             }
         });
-
-        // Status bar para indicar que CLAW está ativo
-        const statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-        statusBar.command = 'clawrafaelia.showStatus';
-        statusBar.text = '$(sparkle) CLAW Active';
-        statusBar.tooltip = 'Clique para ver status | Ctrl+Alt+C: toggle';
-        statusBar.show();
-        context.subscriptions.push(statusBar);
 
         logger.info('✨ CLAW Agent Extension ativada com sucesso!');
         vscode.window.showInformationMessage('✨ CLAW Agent ativado! Sugere código em tempo real.');
