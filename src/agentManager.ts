@@ -1,6 +1,6 @@
 /**
  * AgentManager - Comunica com agent.py via subprocess
- * 
+ *
  * Responsabilidades:
  * 1. Executar agent.py com contexto (timeout 5s para não travar editor)
  * 2. Parsear resposta JSON
@@ -31,10 +31,24 @@ export class AgentManager {
     private agentPythonPath: string;
     private circuitBreakerFailures: number = 0;
     private circuitBreakerTimeout: number = 0;
+    private pythonCommand: string;
 
     constructor(logger: Logger) {
         this.logger = logger;
         this.agentPythonPath = this.resolveAgentPath();
+        this.pythonCommand = this.detectPythonCommand();
+    }
+
+    /**
+     * Detectar comando python correto para este SO
+     * Windows: 'python' ou 'py'
+     * macOS/Linux: 'python3'
+     */
+    private detectPythonCommand(): string {
+        const isWindows = process.platform === 'win32';
+        const cmd = isWindows ? 'python' : 'python3';
+        this.logger.info(`🖥️  SO detectado: ${process.platform} → usando '${cmd}'`);
+        return cmd;
     }
 
     /**
@@ -44,13 +58,13 @@ export class AgentManager {
         try {
             // Validar que agent.py existe e é executável
             const { execSync } = require('child_process');
-            execSync(`python3 "${this.agentPythonPath}" status 2>&1`, {
+            execSync(`${this.pythonCommand} "${this.agentPythonPath}" status 2>&1`, {
                 timeout: 5000,
                 encoding: 'utf-8'
             });
 
             this.logger.info(`✅ agent.py validado: ${this.agentPythonPath}`);
-            return `Agent Path: ${this.agentPythonPath}`;
+            return `Agent Path: ${this.agentPythonPath} (${this.pythonCommand})`;
         } catch (error) {
             const msg = error instanceof Error ? error.message : String(error);
             this.logger.error(`Falha ao validar agent.py: ${msg}`);
@@ -64,7 +78,7 @@ export class AgentManager {
     async getStatus(): Promise<string> {
         try {
             const { execSync } = require('child_process');
-            const result = execSync(`python3 "${this.agentPythonPath}" status 2>&1`, {
+            const result = execSync(`${this.pythonCommand} "${this.agentPythonPath}" status 2>&1`, {
                 timeout: 3000,
                 encoding: 'utf-8'
             });
@@ -76,7 +90,7 @@ export class AgentManager {
 
     /**
      * Solicitar sugestão inline
-     * 
+     *
      * Estratégia:
      * 1. Circuit breaker: se API falhou 3x, esperar 5min
      * 2. Cache semântico: verificar sugestões similares
@@ -182,7 +196,7 @@ export class AgentManager {
 
                 // Executar agent.py como subprocess
                 const { spawn } = require('child_process');
-                const agentProcess = spawn('python3', [
+                const agentProcess = spawn(this.pythonCommand, [
                     this.agentPythonPath,
                     'inline',  // Comando específico para inline completions
                     JSON.stringify(payload)
@@ -313,7 +327,7 @@ export class AgentManager {
         // 3. /usr/local/bin/agent.py
         // 4. ~/.claw/agent.py
         const found = PathResolver.findAgentPy(configuredPath);
-        
+
         if (found) {
             return found;
         }

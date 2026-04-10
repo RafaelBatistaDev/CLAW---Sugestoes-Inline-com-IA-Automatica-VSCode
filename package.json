@@ -2,7 +2,7 @@
   "name": "clawrafaelia-suggestions",
   "displayName": "CLAW - Sugestões Inline com IA Automática",
   "description": "Sugestões de código em tempo real. Auto-detecta e usa qualquer IA: Gemini, OpenAI, Claude, LocalAI, Ollama",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "icon": "icon.png",
   "publisher": "RafaelBatista",
   "author": {

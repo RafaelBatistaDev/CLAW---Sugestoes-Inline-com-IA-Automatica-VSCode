@@ -4,7 +4,7 @@
 
 <div align="center">
 
-[![Version](https://img.shields.io/badge/version-1.1.9-blue?style=flat-square)](#)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](/LICENSE)
 [![Language](https://img.shields.io/badge/language-TypeScript-blue?style=flat-square)](#)
 [![VSCode](https://img.shields.io/badge/vscode-%5E1.85.0-0078d4?style=flat-square)](#)
@@ -58,8 +58,32 @@ git clone git@github.com:RafaelBatistaDev/CLAW---Sugestoes-Inline-com-IA-Automat
 cd CLAW---Sugestoes-Inline-com-IA-Automatica-VSCode
 npm install
 npm run build:auto
-code --install-extension clawrafaelia-suggestions-1.1.9.vsix
+code --install-extension clawrafaelia-suggestions-1.2.0.vsix
 ```
+
+---
+
+## 🖥️ Compatibilidade com Sistemas Operacionais
+
+### ✅ Windows 10/11
+- **Suporte**: ✅ Totalmente compatível
+- **Python**: Requer Python 3.9+ (Microsoft Store ou python.org)
+- **Comando**: Usa `python` automaticamente
+- **agent.py**: `C:\Users\{usuario}\bin\agent.py` ou `%USERPROFILE%\.local\bin\agent.py`
+
+### ✅ macOS (Intel/Apple Silicon)
+- **Suporte**: ✅ Totalmente compatível
+- **Python**: Requer Python 3.9+ (Homebrew: `brew install python3`)
+- **Comando**: Usa `python3` automaticamente
+- **agent.py**: `~/.local/bin/agent.py` ou `~/bin/agent.py`
+
+### ✅ Linux (Ubuntu, Fedora, Debian, etc)
+- **Suporte**: ✅ Totalmente compatível
+- **Python**: Python 3 geralmente pré-instalado
+- **Comando**: Usa `python3` automaticamente
+- **agent.py**: `~/.local/bin/agent.py` ou `~/.claw/agent.py`
+
+**Novo em v1.2.0**: Detecção automática de SO para usar o comando Python correto! 🎉
 
 ---
 
