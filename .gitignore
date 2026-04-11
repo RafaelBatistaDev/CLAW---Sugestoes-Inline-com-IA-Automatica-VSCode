@@ -40,10 +40,9 @@ Thumbs.db
 # Development scripts (não necessários no repo)
 scripts/
 Makefile
-.env.example
 
 # Documentation (não necessária no build/release)
-*.md
+# Note: Mantenha README.md, CONTRIBUTING.md, LICENSE
 INDEX.md
 VERSION_PLAN.md
 TESTING_CHECKLIST.md

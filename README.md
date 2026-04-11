@@ -347,13 +347,24 @@ Veja [LICENSE](/LICENSE) para detalhes completos.
 
 ## 🤝 Contribuindo
 
-Contribuições são bem-vindas! Por favor:
+Contribuições são bem-vindas! 🙏
 
-1. Fork o projeto
-2. Crie uma branch (`git checkout -b feature/MinhaFeature`)
-3. Commit (`git commit -m 'Add MinhaFeature'`)
-4. Push (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
+Seja reportando bugs, sugerindo melhorias, escrevendo documentação ou enviando código, sua ajuda é importante!
+
+👉 **[Leia o Guia Completo de Contribuição](CONTRIBUTING.md)** para:
+- Setup local
+- Padrões de código
+- Processo de pull request
+- Dúvidas frequentes
+
+Versão rápida:
+```bash
+git clone <seu-fork>
+cd CLAW---Sugestoes-Inline-com-IA-Automatica-VSCode
+npm install && make build-local
+# Faça suas mudanças
+git push e abra um PR!
+```
 
 ---
 
