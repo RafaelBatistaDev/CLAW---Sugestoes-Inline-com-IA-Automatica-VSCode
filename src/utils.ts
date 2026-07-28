@@ -45,12 +45,16 @@ export function readConfigValue(key: string): string | undefined {
 
         const content = fs.readFileSync(configPath, 'utf-8');
         const config = JSON.parse(content);
-        return key.split('.').reduce((obj: Record<string, unknown>, k: string) => {
-            if (obj && typeof obj === 'object' && k in obj) {
-                return (obj as Record<string, unknown>)[k];
+        let current: unknown = config;
+        const keys = key.split('.');
+        for (const k of keys) {
+            if (current && typeof current === 'object' && k in current) {
+                current = (current as Record<string, unknown>)[k];
+            } else {
+                return undefined;
             }
-            return undefined;
-        }, config as Record<string, unknown>) as string | undefined;
+        }
+        return typeof current === 'string' ? current : undefined;
     } catch {
         return undefined;
     }

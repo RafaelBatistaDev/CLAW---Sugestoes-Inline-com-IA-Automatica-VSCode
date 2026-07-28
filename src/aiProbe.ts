@@ -12,9 +12,6 @@
 
 import { Logger } from './logger';
 import { execSync } from 'child_process';
-import * as path from 'path';
-import * as fs from 'fs';
-import { homedir } from 'os';
 import { fetchWithTimeout, readConfigValue } from './utils';
 
 // ═══════════════════════════════════════════════════════════════════════════════

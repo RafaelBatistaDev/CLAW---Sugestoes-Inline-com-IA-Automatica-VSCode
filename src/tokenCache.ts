@@ -10,9 +10,9 @@
 import { join } from 'path';
 import {
     readFileSync,
-    writeFile,
+    mkdirSync,
     existsSync,
-    mkdirSync
+    promises as fsPromises
 } from 'fs';
 
 interface CacheEntry {
@@ -102,7 +102,7 @@ export class TokenCache {
     clear(): void {
         this.cache.clear();
         try {
-            writeFile(this.cacheFilePath, '{}').catch(() => { /* ignorar */ });
+            fsPromises.writeFile(this.cacheFilePath, '{}').catch(() => { /* ignorar */ });
         } catch {
             // Ignorar erro de escrita
         }
@@ -224,7 +224,7 @@ export class TokenCache {
                 obj[key] = value;
             }
 
-            await writeFile(this.cacheFilePath, JSON.stringify(obj, null, 2));
+            await fsPromises.writeFile(this.cacheFilePath, JSON.stringify(obj, null, 2));
         } catch {
             // Ignorar erro de escrita
         } finally {

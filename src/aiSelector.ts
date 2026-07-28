@@ -25,11 +25,6 @@ interface AICall {
     error?: string;
 }
 
-interface OpenAIMessage {
-    role: 'system' | 'user' | 'assistant';
-    content: string;
-}
-
 interface OpenAIResponse {
     choices?: Array<{
         message?: {
