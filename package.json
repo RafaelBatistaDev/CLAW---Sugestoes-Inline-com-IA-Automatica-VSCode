@@ -1,0 +1,146 @@
+{
+  "name": "clawrafaelia-suggestions",
+  "displayName": "CLAW - Sugestões Inline com IA Automática",
+  "description": "Sugestões de código em tempo real. Auto-detecta e usa qualquer IA: Gemini, OpenAI, Claude, LocalAI, Ollama",
+  "version": "1.3.0",
+  "icon": "icon.png",
+  "publisher": "RafaelBatista",
+  "author": {
+    "name": "Rafael Batista",
+    "email": "rafael@clawrafaelia.dev",
+    "url": "https://github.com/RafaelBatistaDev"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RafaelBatistaDev/CLAW---Sugestoes-Inline-com-IA-Automatica-VSCode"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Machine Learning",
+    "Formatters",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "code-completion",
+    "gemini",
+    "openai",
+    "claude",
+    "anthropic",
+    "localai",
+    "ollama",
+    "llm",
+    "copilot",
+    "suggestions",
+    "inline-completion",
+    "auto-detect",
+    "intellisense",
+    "productivity"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "clawrafaelia.toggleSuggestions",
+        "title": "CLAW: Ativar/Desativar Sugestões"
+      },
+      {
+        "command": "clawrafaelia.clearCache",
+        "title": "CLAW: Limpar Cache Local"
+      },
+      {
+        "command": "clawrafaelia.showStatus",
+        "title": "CLAW: Mostrar Status"
+      }
+    ],
+    "configuration": {
+      "title": "CLAW Agent",
+      "properties": {
+        "clawrafaelia.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ativar/desativar sugestões inline"
+        },
+        "clawrafaelia.debounceMs": {
+          "type": "number",
+          "default": 500,
+          "minimum": 100,
+          "maximum": 5000,
+          "description": "Intervalo em ms para disparar sugestão (economiza API)"
+        },
+        "clawrafaelia.agentPythonPath": {
+          "type": "string",
+          "default": "~/.local/bin/agent.py",
+          "description": "Caminho para agent.py (padrão: ~/.local/bin/agent.py)"
+        },
+        "clawrafaelia.maxTokens": {
+          "type": "number",
+          "default": 150,
+          "minimum": 20,
+          "maximum": 500,
+          "description": "Máximo de tokens por sugestão (economiza quota)"
+        },
+        "clawrafaelia.enableLocalAI": {
+          "type": "boolean",
+          "default": true,
+          "description": "Usar LocalAI para tarefas simples (ZERO API)"
+        },
+        "clawrafaelia.logLevel": {
+          "type": "string",
+          "enum": ["off", "error", "warn", "info", "debug"],
+          "default": "info",
+          "description": "Nível de logging"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "clawrafaelia.toggleSuggestions",
+        "key": "ctrl+alt+c",
+        "when": "editorTextFocus && !suggestWidgetVisible"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile:prod",
+    "compile": "tsc -p ./",
+    "compile:prod": "tsc -p ./ && webpack --config webpack.config.js",
+    "watch": "tsc -watch -p ./",
+    "dev": "concurrently \"npm run watch\" \"npm run test:watch\"",
+    "lint": "eslint src --ext ts",
+    "lint:fix": "eslint src --ext ts --fix",
+    "test": "node ./out/test/runTest.js",
+    "test:watch": "npm run test -- --watch",
+    "bundle": "webpack --config webpack.config.js",
+    "package": "vsce package --no-update-package-json",
+    "build:all": "npm install && npm run compile && npm run bundle && npm run package",
+    "build:distrobox": "bash ./scripts/build-with-distrobox.sh",
+    "build:podman": "bash ./scripts/build-with-podman.sh",
+    "build:local": "bash ./scripts/build-locally.sh",
+    "build:auto": "bash ./scripts/build-vsix.sh",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "terser-webpack-plugin": "^5.3.9",
+    "typescript": "^5.3.3",
+    "vsce": "^2.15.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}

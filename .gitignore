@@ -1,0 +1,63 @@
+# Compiled TypeScript
+dist/
+out/
+*.js.map
+*.d.ts
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Test & Coverage
+coverage/
+.nyc_output/
+*.test.js
+*.spec.js
+
+# Build outputs
+*.vsix
+
+# IDE & Editor
+.vscode/
+.vscode-test/
+*.swp
+*.swo
+*~
+.idea/
+.DS_Store
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Development scripts (não necessários no repo)
+scripts/
+Makefile
+
+# Documentation (não necessária no build/release)
+# Note: Mantenha README.md, CONTRIBUTING.md, LICENSE
+INDEX.md
+VERSION_PLAN.md
+TESTING_CHECKLIST.md
+STATUS.md
+QUICKSTART.md
+README-DEV.md
+
+# Git
+.git/
+.gitignore
+
+# Tags and backups
+*.swp
+*.swo
+*~
+.tags
+tags
+.ctags
